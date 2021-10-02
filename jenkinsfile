@@ -20,7 +20,29 @@ pipeline {
                 """
 
             }
+          stage('docker push') {
+              steps {
+                  withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                sh """
+                docker push radwa98/sprints_jenkins_django:latest
+                """
 
+            }
+            stage('docker deploy') {
+              steps {
+            
+
+            }
+            stage('docker notification') {
+              steps {
+            
+                success {
+                  slackSend (color: '#00ffcc', message: "pipeline succeded")
+                }
+                failure {
+                  slackSend (color: '#cc3300', message: "pipeline failed")
+                }
+            }
         }
     }
 }
