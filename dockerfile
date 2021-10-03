@@ -1,16 +1,18 @@
-FROM ubuntu:lts
+FROM ubuntu:latest
 
-RUN apt-get update
-RUN apt-get install -y build-essential python 3.6 python3-pip
+RUN apt-get update && \
+    apt-get install -y python3 && \
+    apt-get install -y python3-pip
+    
+ENV PYTHONUNBUFFERED=1
+COPY . /simpleApp/
 
-COPY . simpleApp
-WORKDIR ./simpleApp
+WORKDIR /simpleApp/
 
-#install to start Django server
 RUN pip3 install -r requirements.txt
-RUN python3.6 manage.py makemigrations
-RUN python3.6 manage.py migrate
 
-EXPOSE 8000
+RUN python3 manage.py makemigrations
 
-CMD["python3.6", "manage.py", "runserver", "0.0.0.0:8000"]
+RUN python3 manage.py migrate
+
+CMD python3 manage.py runserver 0.0.0.0:8000
