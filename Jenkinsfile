@@ -44,11 +44,11 @@ pipeline {
 
            post{
                success{
-                  slackSend(color: '#66ff66', success: "Pipline succeeded")
+                  slackSend(color: "#66ff66", message: "Pipline succeeded")
                
                }
                 failure{
-                  slackSend(color: '#ff1a1a', failure: "Pipline failed")
+                  slackSend(color: "#ff1a1a" , message: "Pipline failed")
                
                }
            
