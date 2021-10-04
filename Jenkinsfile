@@ -12,9 +12,6 @@ pipeline {
         
          stage('docker build') {
               steps {
-                  Use Jenkins UsernamePassword credentials information (Username: AccessKeyId, Password: SecretAccessKey):    
-                withAWS(credentials:'nameOfSystemCredentials') {
-   
 
                   withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 sh """
@@ -24,12 +21,11 @@ pipeline {
                 """
 
             }
-            }
+           
               }}
           stage('docker push') {
               steps {
-                   Use Jenkins UsernamePassword credentials information (Username: AccessKeyId, Password: SecretAccessKey):    
-                withAWS(credentials:'nameOfSystemCredentials') {
+            
                   withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 sh """
                 docker login -u ${USERNAME} -p ${PASSWORD}
@@ -37,7 +33,7 @@ pipeline {
                 """
 
             }
-               }
+               
               }}
             stage('docker deploy') {
               steps {
