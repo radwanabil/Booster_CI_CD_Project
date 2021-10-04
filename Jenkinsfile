@@ -38,7 +38,7 @@ pipeline {
             stage('docker deploy') {
               steps {
             
-              sh 'docker run -d -p 20:8080 radwa98/sprints_jenkins_django:latest'
+              sh 'docker run -d -p 20:8000 radwa98/sprints_jenkins_django:latest'
             }
             
         }
